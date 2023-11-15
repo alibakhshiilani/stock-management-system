@@ -14,7 +14,7 @@ const Dashboard = () => {
   const columns = [
     {
         name: 'کد محصول',
-        selector: row => <div className='bg-green-600 shadow-lg font-extrabold text-white p-2 rounded-lg'>{row?.product?.code}</div>,
+        selector: row => <Link to={'/stock_items/create/'+row?.product?.code} className='block bg-green-600 shadow-lg font-extrabold text-white p-2 rounded-lg'>{row?.product?.code}</Link>,
         sortable: true,
     },
     {
@@ -51,20 +51,32 @@ const Dashboard = () => {
         },
   {
     name: 'تعداد در کارتن',
-    selector: row => row?.product.box_count,
+    selector: row => row?.line,
     sortable: true,
     },
 
     {
       name: 'تعداد کفچین',
-      selector: row => row?.product.bottom_box_count,
+      selector: row => row?.floor,
       sortable: true,
       },
-  {
-  name: 'لوکیشن',
-  selector: row => <span style={{direction:"ltr"}}>{row.location}</span>,
-  sortable: true,
-  },
+
+      {
+        name: 'راننده',
+        selector: row => row?.driver?.name,
+        sortable: true,
+        },
+
+        {
+          name: 'وسیله',
+          selector: row => row?.vehicle?.name,
+          sortable: true,
+          },
+  // {
+  // name: 'لوکیشن',
+  // selector: row => <span style={{direction:"ltr"}}>{row.location}</span>,
+  // sortable: true,
+  // },
   {
     operation:true,
     name: 'عملیات',

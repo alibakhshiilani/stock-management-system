@@ -15,7 +15,21 @@ module.exports = (sequelize) => {
       type: DataTypes.BIGINT,
       allowNull: false,
     },
+    driver_id: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+    },
+    vehicle_id: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+    },
     location: {
+      type: DataTypes.STRING,
+    },
+    line: {
+      type: DataTypes.STRING,
+    },
+    floor: {
       type: DataTypes.STRING,
     },
     expiration_date: {

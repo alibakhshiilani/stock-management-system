@@ -31,7 +31,7 @@ const Form = ({onSubmit,defaultValues}) => {
 
 <Input register={register("code",{
     required:"کد Article الزامی است"
-  })} errors={errors} name="code" placeholder={"کد Article"}/>
+  })} errors={errors} name="code" placeholder={"کد Article"} readOnly/>
 
 
 
@@ -39,21 +39,21 @@ const Form = ({onSubmit,defaultValues}) => {
 
 <Input register={register("name",{
     required:"شرح کالا الزامی است"
-  })} errors={errors} name="name" placeholder={"شرح کالا"}/>
+  })} errors={errors} name="name" placeholder={"شرح کالا"} readOnly/>
 
 
-<label for="kafchin" className="text-sm mb-2 block font-normal text-gray-500">کفچین</label>
+<label for="floor" className="text-sm mb-2 block font-normal text-gray-500">کفچین</label>
 
-<Input register={register("kafchin",{
+<Input type='number' register={register("floor",{
     required:"کفچین الزامی است"
-  })} errors={errors} name="kafchin" placeholder={"کفچین"}/>
+  })} errors={errors} name="floor" placeholder={"کفچین"}/>
 
 
-<label for="pollet_count" className="text-sm mb-2 block font-normal text-gray-500">تعداد پالت دریافت</label>
+<label for="line" className="text-sm mb-2 block font-normal text-gray-500">تعداد پالت دریافت</label>
 
-<Input register={register("pollet_count",{
+<Input type='number' register={register("line",{
     required:"تعداد پالت دریافت الزامی است"
-  })} errors={errors} name="pollet_count" placeholder={"تعداد پالت دریافت"}/>
+  })} errors={errors} name="line" placeholder={"تعداد پالت دریافت"}/>
 
 {/* <label for="location" className="text-sm mb-2 block font-normal text-gray-500">لوکیشن کالا</label> */}
 
@@ -165,6 +165,10 @@ const Form = ({onSubmit,defaultValues}) => {
   {vehicleListData?.rows.map((item) => (<option value={item.id}>{item.name}</option>))}
 </select>
 
+{
+      errors?.["vehicle_id"] && <span className='text-red-600 mb-5 block'>{errors?.["vehicle_id"]?.message}</span>
+    }    
+
 
 <label for="driver_id" className="text-sm mb-2 block font-normal text-gray-500">راننده</label>
 
@@ -179,7 +183,9 @@ const Form = ({onSubmit,defaultValues}) => {
             {driverListData?.rows.map((item) => (<option value={item.id}>{item.name}</option>))}
           </select>
           
-        
+          {
+      errors?.["driver_id"] && <span className='text-red-600 mb-5 block'>{errors?.["driver_id"]?.message}</span>
+    } 
    
 
     {/* {

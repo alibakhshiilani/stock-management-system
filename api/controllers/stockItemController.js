@@ -5,12 +5,12 @@ const { Op } = require('sequelize');
 
 const createStockItem = async (req, res) => {
   try {
-    const { production_date,location_1,location_2,location_3,expiration_date,box_count,code } = req.body;
+    const { production_date,line,floor,expiration_date,driver_id,vehicle_id,code } = req.body;
     const product = await models.Product.findOne({
       where:{code:code}
     });
     const stock = await models.Stock.findOne();
-    const stockItem = await models.StockItem.create( { stock_id:stock.id, product_id:product.id, location:location_3+location_2+location_1,expiration_date:moment(expiration_date).format("YYYY-M-D 00:00:00"),production_date:moment(production_date).format("YYYY-M-D 00:00:00"),login_date:moment().format("YYYY-M-D 00:00:00"),box_count });
+    const stockItem = await models.StockItem.create( { driver_id,vehicle_id,stock_id:stock.id, product_id:product.id,expiration_date:moment(expiration_date).format("YYYY-M-D 00:00:00"),production_date:moment(production_date).format("YYYY-M-D 00:00:00"),login_date:moment().format("YYYY-M-D 00:00:00"),line,floor });
     res.status(201).json(stockItem);
   } catch (error) {
     console.error(error);
@@ -28,7 +28,9 @@ const getAllStockItems = async (req, res) => {
         where:{id:Number(id)},
         include: [
           { model: models.Stock, as: 'stock' },
-          { model: models.Product, as: 'product' }
+          { model: models.Product, as: 'product' },
+          { model: models.Driver, as: 'driver' },
+          { model: models.Vehicle, as: 'vehicle' }
         ]
     });
   
@@ -47,8 +49,10 @@ const getAllStockItems = async (req, res) => {
         order: [['id', 'DESC']],
         include: [
           { model: models.Stock, as: 'stock' },
-          { model: models.Product, as: 'product',where:whereObject,
-        }
+          { model: models.Product, as: 'product',where:whereObject
+        },
+        { model: models.Driver, as: 'driver' },
+        { model: models.Vehicle, as: 'vehicle' }
         ]
       });
   
@@ -60,7 +64,9 @@ const getAllStockItems = async (req, res) => {
       order: [['id', 'DESC']],
       include: [
         { model: models.Stock, as: 'stock' },
-        { model: models.Product, as: 'product' }
+        { model: models.Product, as: 'product' },
+        { model: models.Driver, as: 'driver' },
+        { model: models.Vehicle, as: 'vehicle' }
       ]
   });
 
@@ -89,14 +95,15 @@ const getStockItemById = async (req, res) => {
 
 const updateStockItem = async (req, res) => {
   const { id } = req.params;
-  const { production_date,location_1,location_2,location_3,expiration_date,box_count,code } = req.body;
+  const { production_date,line,floor,expiration_date,code,driver_id,vehicle_id } = req.body;
   // return location_2;
   // res.status(200).json({location_2})
   const product = await models.Product.findOne({
     where:{code:code}
   });
   const stock = await models.Stock.findOne();
-  const data = { code,stock_id:stock.id, product_id:product.id, location:`${location_3}${location_2}${location_1}`,expiration_date:moment(expiration_date).format("YYYY-M-D 00:00:00"),production_date:moment(production_date).format("YYYY-M-D 00:00:00"),login_date:moment().format("YYYY-M-D 00:00:00"),box_count }
+  // location:`${location_3}${location_2}${location_1}`
+  const data = { driver_id,vehicle_id,code,stock_id:stock.id, product_id:product.id,expiration_date:moment(expiration_date).format("YYYY-M-D 00:00:00"),production_date:moment(production_date).format("YYYY-M-D 00:00:00"),login_date:moment().format("YYYY-M-D 00:00:00"),line,floor }
   try {
     const [updated] = await models.StockItem.update(data, {
       where: { id },

@@ -23,6 +23,7 @@ const CreateStockItem = () => {
   let navigate = useNavigate();
 
   const onSubmit = async data => {
+
     const createdStockItem = await createStockItemMutation.mutateAsync(data);
     navigate("/")
   };
@@ -69,7 +70,7 @@ className="ml-3 font-semibold text-sm text-gray-600  bg-secondary p-2 rounded te
         expiration_date:(data?.rows?.[0]?.expiration_date),
         production_date:(data?.rows?.[0]?.production_date),
         name:(data?.rows?.[0]?.product.name),
-        dirver_id:1,
+        driver_id:1,
         vehicle_id:1,
       }}/>
     }

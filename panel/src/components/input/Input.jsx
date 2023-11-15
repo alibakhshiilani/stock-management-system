@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-function Input({ name, register , errors , placeholder,type="text" }) {
+function Input({ name, register , errors , placeholder,type="text",readOnly=false }) {
     const error = errors[name];
 
     // console.log("error",error)
@@ -10,6 +10,7 @@ function Input({ name, register , errors , placeholder,type="text" }) {
       <>
       <div className={`border rounded-lg flex mb-4 ${error ? 'border-red-500' : 'border-gray-400'}`}>
         <input
+        readOnly={readOnly}
           name={name}
           placeholder={placeholder}
           className={`flex-auto p-4 block rounded-lg font-medium outline-none border border-transparent focus:border-green-500 focus:text-green-500 ${error ? 'border-red-500' : ''}`}

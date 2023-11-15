@@ -48,10 +48,19 @@ function Layout() {
               {/* Sidebar links */}
               <div  onClick={() => {handleAutoCloseInMobile()}} className="px-3 py-3 text-white hover:bg-secondary transition-all duration-500">
                 <Link
+                  to="/stock_items/create"
+                  className="router-link-exact-active router-link-active pb-2"
+                >
+                  ثبت ورود به انبار
+                </Link>
+              </div>
+
+              <div  onClick={() => {handleAutoCloseInMobile()}} className="px-3 py-3 text-white hover:bg-secondary transition-all duration-500">
+                <Link
                   to="/"
                   className="router-link-exact-active router-link-active pb-2"
                 >
-                  محصولات در انبار
+                  لیست انبار
                 </Link>
               </div>
 

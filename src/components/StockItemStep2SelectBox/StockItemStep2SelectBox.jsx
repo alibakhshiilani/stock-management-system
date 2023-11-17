@@ -3,11 +3,7 @@ import { useState, useEffect } from 'react'
 const StockItemStep2SelectBox = ({ register, name, locations, defaultValue }) => {
   const [selectBoxValue, setSelectBoxValue] = useState('')
 
-  const selectHandlerChange = (event) => {
-    // if (event.target.value < 10) event.target.value = event.target.value.padStart(3, '0')
-    // else event.target.value = +event.target.value
-    // event.target.value = event.target.value.padStart(3, '0').slice(-2)
-  }
+  const selectHandlerChange = (event) => {}
 
   return (
     <div className="flex justify-center ">
@@ -18,9 +14,8 @@ const StockItemStep2SelectBox = ({ register, name, locations, defaultValue }) =>
           {...register(name, {
             required: 'این فیلد الزامی می باشد',
           })}
-          // value={selectBoxValue < 10 ? '' + selectBoxValue : selectBoxValue}
-          defaultValue={defaultValue}
-          onChange={selectHandlerChange}
+          value={selectBoxValue}
+          onChange={(e) => setSelectBoxValue(e.target.value)}
           className=" border-gray-500 appearance-none w-full mb-3 p-4 rounded-lg block font-medium outline-none border focus:text-green-500 focus:border-green-500 ">
           {locations.map((item) => (
             <option key={item} value={item}>

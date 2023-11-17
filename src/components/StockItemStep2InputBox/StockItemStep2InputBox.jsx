@@ -1,4 +1,11 @@
-const CreateStockItemStep2InputBox = ({ register, inputValue, inputTitle, inputPlaceholder, isTextArea }) => {
+const CreateStockItemStep2InputBox = ({
+  register,
+  inputValue,
+  registerValue,
+  inputTitle,
+  inputPlaceholder,
+  isTextArea,
+}) => {
   return (
     <div className="">
       <label htmlFor="createStockItemStep2Input" className="text-sm mb-2 block font-normal text-gray-500">
@@ -11,7 +18,7 @@ const CreateStockItemStep2InputBox = ({ register, inputValue, inputTitle, inputP
           name="articleCode"
           value={inputValue}
           placeholder="شرح کالا"
-          {...register}
+          {...register(registerValue)}
         />
       ) : (
         <input
@@ -20,7 +27,7 @@ const CreateStockItemStep2InputBox = ({ register, inputValue, inputTitle, inputP
           name="createStockItemStep2Input"
           value={inputValue}
           placeholder={inputPlaceholder}
-          {...register}
+          {...register(registerValue)}
         />
       )}
     </div>

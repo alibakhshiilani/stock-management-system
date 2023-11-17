@@ -4,6 +4,7 @@ import Input from '@components/input/Input.jsx'
 import CreateStockItemStep2InputBox from '@components/StockItemStep2InputBox/StockItemStep2InputBox.jsx'
 import { location1, location2, location3 } from '@api/data/locationData.js'
 import StockItemStep2SelectBox from '@components/StockItemStep2SelectBox/StockItemStep2SelectBox.jsx'
+import useCreateStockItem from '@api/stock_item/useCreateStockItem.js'
 
 const CreateStockItemStep2 = () => {
   const {
@@ -14,22 +15,20 @@ const CreateStockItemStep2 = () => {
 
   const [allPallets, setAllPallets] = useState([])
   const [mainPallet, setMainPallet] = useState({})
+  const [mainPalletID, setMainPalletID] = useState(0)
 
-  function a() {
+  useEffect(() => {
     let infoPallet = JSON.parse(localStorage.getItem('stock_items_create')) || []
     infoPallet.isOpen = false
     const pallets = []
 
     for (let i = 0; i < infoPallet.line; i++) {
-      
-      pallets.push({...infoPallet,id: i +1})
+      pallets.push({ ...infoPallet, id: i + 1 })
     }
     setAllPallets(pallets)
     setMainPallet(infoPallet)
-  }
-  useEffect(() => {
-    a()
   }, [])
+
   const openAccordionPallet = (palletIndex) => {
     const showPalletFiltered = allPallets.map((pallet, index) => {
       if (index === palletIndex) {
@@ -42,18 +41,18 @@ const CreateStockItemStep2 = () => {
     setAllPallets(showPalletFiltered)
   }
 
-  const createStockStep2FormSubmit = (e) => {
-    // e.preventDefault()
-  }
-
-  const savePallet = (e, palletIndex) => {
-    e.preventDefault()
-    // setAllPallets(allPallets.splice(palletIndex))
-    console.log('allPallets.splice(palletIndex)=> ', allPallets)
+  const onSubmit = async (data) => {
+    console.log('pallet saved :))', data)
+    // in code test (for example in time for request api)
+    setTimeout(() => {
+      const filteredPallet = allPallets.filter((pallet) => pallet.id !== mainPalletID)
+      setAllPallets(filteredPallet)
+      localStorage.setItem('stock_items_create', JSON.stringify({ ...mainPallet, line: allPallets.length - 1 }))
+    }, 2000)
   }
 
   return (
-    <div className="flex-grow flex flex-col">
+    <section className="flex-grow flex flex-col">
       <div className="flex-grow">
         <div className="px-4 pb-8 pt-3 mx-auto">
           <div className="mt-4">
@@ -67,7 +66,7 @@ const CreateStockItemStep2 = () => {
 
         <div className="px-4 mx-auto">
           <div className="mt-0">
-            <form className="p-4 bg-white shadow-md rounded-lg" onSubmit={handleSubmit(createStockStep2FormSubmit)}>
+            <div className="p-4 bg-white shadow-md rounded-lg">
               {allPallets?.length > 0 ? (
                 allPallets.map((item, index) => (
                   <div className="pallet-item mb-4 rounded-lg shadow-md p-4" key={item.id}>
@@ -90,13 +89,14 @@ const CreateStockItemStep2 = () => {
                       className={`pallet-item__body mt-8 transition-all   ${
                         item.isOpen ? 'visible block' : 'invisible hidden'
                       }`}>
-                      <form onSubmit={handleSubmit} className="">
+                      <form className="" onSubmit={handleSubmit(onSubmit)}>
                         <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                           <CreateStockItemStep2InputBox
                             inputPlaceholder="کد Article"
                             inputTitle="کد Article"
                             inputValue={item.code}
                             register={register}
+                            registerValue="articleCode"
                           />
                           <CreateStockItemStep2InputBox
                             inputPlaceholder=" شرح کالا "
@@ -104,12 +104,14 @@ const CreateStockItemStep2 = () => {
                             inputValue={item.name}
                             register={register}
                             isTextArea={true}
+                            registerValue="productCaption"
                           />
                           <CreateStockItemStep2InputBox
                             inputPlaceholder=" لاین "
                             inputTitle=" لاین "
                             inputValue={item.line}
                             register={register}
+                            registerValue="productLine"
                           />
                         </div>
                         {/* location */}
@@ -136,9 +138,8 @@ const CreateStockItemStep2 = () => {
                         </div>
                         <div className="flex justify-center">
                           <button
-                            className="mt-3 bg-green-500 font-medium text-white px-6 py-3 rounded-lg shadow-lg hover:bg-green-400"
-                            type="submit"
-                            onClick={(e) => savePallet(e, index)}>
+                            onClick={() => setMainPalletID(+item.id)}
+                            className="mt-3 bg-green-500 font-medium text-white px-6 py-3 rounded-lg shadow-lg hover:bg-green-400">
                             ثبت
                           </button>
                         </div>
@@ -149,11 +150,11 @@ const CreateStockItemStep2 = () => {
               ) : (
                 <span className="flex justify-center py-4 text-red-500">هیچ پالتی انتخاب نشده است </span>
               )}
-            </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 

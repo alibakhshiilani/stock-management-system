@@ -201,12 +201,12 @@ const Form = ({ onSubmit, defaultValues }) => {
       </label>
       <select
         className="border-gray-500 w-full mb-3 flex-auto p-4 block rounded-lg font-medium outline-none border focus:border-green-500 focus:text-green-500 "
-        name="driver_id"
+        name="vehicle_id"
         {...register('vehicle_id', {
           required: 'نوع وسیله نقلیه الزامی است',
         })}>
         {vehicleListData?.rows.map((item) => (
-          <option key={item.id} value={item.name}>
+          <option key={item.id} value={item.id}>
             {item.name}
           </option>
         ))}

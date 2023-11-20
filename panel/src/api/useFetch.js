@@ -1,8 +1,8 @@
 import { useQueryClient } from 'react-query'
 import { toast } from 'react-toastify'
 
-// export const baseURL = 'https://api.' + window.location.hostname
-export const baseURL = 'http://localhost:3000'
+export const baseURL = 'https://api.' + window.location.hostname
+// export const baseURL = 'http://localhost:3000'
 
 const useFetch = async ({
   url,

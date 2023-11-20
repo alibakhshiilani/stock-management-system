@@ -1,0 +1,17 @@
+{
+  "name": "stock-management-system",
+  "version": "1.0.0",
+  "scripts": {
+    "start-backend": "cd api && npm dev",
+    "build-frontend": "cd panel && npm run build",
+    "build": "npm run build-frontend && echo 'Frontend built!' && npm run start-backend"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.3"
+  }
+}
